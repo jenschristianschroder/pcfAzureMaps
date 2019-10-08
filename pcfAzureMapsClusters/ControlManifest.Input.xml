@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="pag" constructor="pcfAzureMapsClusters" version="0.0.1" display-name-key="pcfAzureMapsClusters" description-key="pcfAzureMapsClusters description" control-type="standard">
+    <data-set name="dataSet" display-name-key="Dataset_Display_Key">
+    </data-set>
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="atlas.min.css" order="1" />
+    </resources>
+  </control>
+</manifest>
