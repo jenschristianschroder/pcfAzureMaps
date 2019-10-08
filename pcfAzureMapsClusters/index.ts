@@ -7,13 +7,10 @@ type DataSet = ComponentFramework.PropertyTypes.DataSet;
 
 export class pcfAzureMapsClusters implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 	private featureCollection: atlas.data.FeatureCollection;
-	private feature: atlas.data.Feature<atlas.data.Geometry, Coordinates>;
 
 	private map : atlas.Map;
 	private _mapContainer: HTMLDivElement;
 
-	private datasource:  atlas.source.DataSource;
-	private popup: atlas.Popup;
 	/**
 	 * Empty constructor.
 	 */
@@ -50,7 +47,7 @@ export class pcfAzureMapsClusters implements ComponentFramework.StandardControl<
 			//Add your Azure Maps subscription client ID to the map SDK. Get an Azure Maps client ID at https://azure.com/maps
 			authOptions: {
 				authType: atlas.AuthenticationType.subscriptionKey,
-				subscriptionKey: 'mPZlcjSeoBPiq-QWziggZpTwTwK4DVC_NAiF3l0OwDw'
+				subscriptionKey: '[Your Azure Maps Subscription Key]'
 			},
 			enableAccessibility: false,
 		});
@@ -94,7 +91,6 @@ export class pcfAzureMapsClusters implements ComponentFramework.StandardControl<
 		else {
 			let _map: atlas.Map;
 			_map = this.map;
-
 		
 			let _locations = context.parameters.dataSet;
 			for(let _locationId of _locations.sortedRecordIds) 
@@ -112,9 +108,6 @@ export class pcfAzureMapsClusters implements ComponentFramework.StandardControl<
 				}
 			}
 
-			if(_locations.paging.hasNextPage)
-				_locations.paging.loadNextPage(); //load next page of records
-			
 			//Create a data source and add it to the map.
 			let datasource = new atlas.source.DataSource("ds0", {
 				cluster: true,
@@ -141,8 +134,8 @@ export class pcfAzureMapsClusters implements ComponentFramework.StandardControl<
 				'step',
 				['get', 'point_count'],
 				20,         //Default of 20 pixel radius.
-				50, 30,    //If point_count >= 100, radius is 30 pixels.
-				100, 40     //If point_count >= 750, radius is 40 pixels.
+				50, 30,    //If point_count >= 50, radius is 30 pixels.
+				100, 40     //If point_count >= 100, radius is 40 pixels.
 				],
 				color: [
 					'case',
@@ -206,7 +199,7 @@ export class pcfAzureMapsClusters implements ComponentFramework.StandardControl<
 		if (e.shapes && e.shapes.length > 0) {
 			if (e.shapes[0] instanceof atlas.Shape && e.shapes[0].getType() === 'Point') {
 				var properties = e.shapes[0].getProperties();
-			window.location.href = "https://orgd03ac79d.crm4.dynamics.com/main.aspx?appid=417c49a8-e6e2-e911-a849-000d3a39e21d&pagetype=entityrecord&etn=ts_trafiksignal&id=" + properties.id as string;
+			window.location.href = "https://[your instance url]/main.aspx?appid=417c49a8-e6e2-e911-a849-000d3a39e21d&pagetype=entityrecord&etn=ts_trafiksignal&id=" + properties.id as string;
 			}
 		}
 	}
